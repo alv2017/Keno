@@ -1,0 +1,107 @@
+# Q1: Keno game simulation
+
+Program files:
+	keno_game_simulation.py
+	game.py
+	terminal.py
+keno_game_simulation.py uses game.py and terminal.py
+
+### Simulation Output:
+
+Game Keno-2019-10-19
+Lucky Numbers: 12, 15, 18, 21, 26, 27, 29, 32, 44, 50, 52, 56, 58, 59, 62, 64, 74, 75, 78, 79
+
+Ticket Keno-2019-10-19: 100-1571242461-000001
+Numbers: 5, 15, 32, 38, 44, 52, 54, 64, 66, 69
+Lucky Numbers: 12, 15, 18, 21, 26, 27, 29, 32, 44, 50, 52, 56, 58, 59, 62, 64, 74, 75, 78, 79
+Matched Numbers: 15, 32, 44, 52, 64
+You guessed correctly 5 out of 10
+
+Ticket Keno-2019-10-19: 100-1571242461-000002
+Numbers: 16, 27, 32, 34, 37, 60, 62, 68, 71, 73
+Lucky Numbers: 12, 15, 18, 21, 26, 27, 29, 32, 44, 50, 52, 56, 58, 59, 62, 64, 74, 75, 78, 79
+Matched Numbers: 27, 32, 62
+You guessed correctly 3 out of 10
+
+Ticket Keno-2019-10-19: 100-1571242461-000003
+Numbers: 18, 21, 25, 29, 46, 54, 64, 65, 78, 79
+Lucky Numbers: 12, 15, 18, 21, 26, 27, 29, 32, 44, 50, 52, 56, 58, 59, 62, 64, 74, 75, 78, 79
+Matched Numbers: 18, 21, 29, 64, 78, 79
+You guessed correctly 6 out of 10
+
+# Q2: Compute probabilities for matching 5, 6, 7, 8, 9, 10 numbers,
+compute the decimal odds for the probabilities. 
+
+Code: win_probabilities.py
+
+Keno Game Probabilities
+
+0 : p: 0.0457907008 do: 21.84        pay: 0          alt_pay: 0.0       
+1 : p: 0.1795713756 do: 5.57         pay: 0          alt_pay: 0.0       
+2 : p: 0.2952567811 do: 3.39         pay: 0          alt_pay: 0.0       
+3 : p: 0.2674023678 do: 3.74         pay: 0          alt_pay: 0.0       
+4 : p: 0.1473188971 do: 6.79         pay: 0          alt_pay: 0.0       
+5 : p: 0.0514276877 do: 19.44        pay: 3          alt_pay: 3.24      
+6 : p: 0.0114793946 do: 87.11        pay: 15         alt_pay: 14.52     
+7 : p: 0.0016111431 do: 620.68       pay: 100        alt_pay: 103.45    
+8 : p: 0.0001354194 do: 7384.47      pay: 1000       alt_pay: 1230.74   
+9 : p: 6.1206e-06   do: 163381.37    pay: 25000      alt_pay: 27230.23  
+10: p: 1.122e-07    do: 8911711.18   pay: 2500000    alt_pay: 1485285.2 
+----------------------------
+Sum of Probabilities:  1.0
+
+### What odds do you think are fair  for each winning category independently?
+
+I computed decimal odds as 1 divided from corresponding probability.
+I do not think that the odds computed in such a way are fair to our game.
+
+##### What in this particular case the decimal odds are showing us?
+
+Let's slightly change our game, suppose that the player can bet on
+the number of correctly made guesses. If the player guesses correctly
+exactly 5 numbers, he wins 3 GBP, in all other cases the player gets nothing. 
+In this game our computed decimal odds would make sense, 
+and if the payout was equal to the corresponding decimal odd, 
+then we could say that the game is fair in each category.
+
+Example: suppose the player betted to guess correctly 
+7 numbers out of 10. If the player guessed exactly 7 numbers out of 10 correctly
+then he would be paid 620.68 GBP. In case when the player guessed more than seven 
+or less than seven numbers he would be paid 0 GBP.
+
+##### So what about the fair odds then?
+
+Well, I have an idea that possibly could work. 
+We have 6 cases that are going to pay out, so the player's 1 unit of investment 
+could be represented using weights 
+[0, 0, 0, 0, 0, 1/6, 1/6, 1/6, 1/6, 1/6, 1/6]. Based on weights vector
+we can compute the alternative payouts. Using this approach we can say
+that we offer fair winnings for each category. 
+
+# Q3: Suppose you are a gambler, would you like to play Keno game that I've offered?
+Why?
+
+Code: would_you_play.py
+
+Even if you are not a gambler it is worth considering playing Keno game with you,
+this is because the expected game return is greater that 0 and is equal to 0.0566. 
+Normally when one plays against casino or a betting company the expecter return is
+zero or negative.
+
+# Q6: Imagine a Keno machine experiencing some technical problems: some numbers 
+are being selected with a slightly higher probability:
+	i) Describe how statistically justify which numbers have being selected
+	too frequently.
+	
+	Well I'm the person who needs to touch things out, so I imagine myself in the casino
+	with the Keno machine that is possibly broken. I was asked by the owner to find out 
+	if the machine is really broken. In order to solve the problem I would run multiple
+	Keno games and save the outcome to the database. I would be looking at the number of
+	times certain numbers appears in a series of games. If the machine is fair
+	the probability for a number to be a winning number is 0.25
+	Hypothesis:
+	H0: nFreq <= 0.25 H1: nFreq > 0.25
+	If H0 is rejected, then we get a good reason to think that there is something 
+	wrong with the machine.
+	
+
